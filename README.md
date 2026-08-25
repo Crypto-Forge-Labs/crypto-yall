@@ -55,7 +55,7 @@ Three trading bots run independently on the same Hyperliquid account. Each bot:
 - Computes technical signals (2-pole Butterworth oscillator + HMM regime classifier for the daily bot)
 - Compares its current positions to what the strategy says they should be
 - Places market orders to reconcile
-- Logs every fill to a private GitHub Gist
+- Logs every fill to a secret GitHub Gist (unlisted; anyone with the URL can view it)
 - Sends email + Telegram alerts on every execution
 
 ### What it trades
@@ -92,7 +92,7 @@ All three use the same core 2-pole Butterworth low-pass filter and z-score norma
 - Aggressive mode active by default (probabilistic leverage, pyramiding, shorting)
 
 **Risk Controls:**
-- Capital: $10,000 mock (testnet) / configurable on mainnet
+- Capital: $1,000 mock (testnet) / configurable on mainnet
 - Position size: 1% of capital per trade
 - Max positions: 4 concurrent
 - Daily drawdown halt: 5%
@@ -120,7 +120,7 @@ All three use the same core 2-pole Butterworth low-pass filter and z-score norma
 - Exit on zero crossing OR 2x ATR stop
 
 **Risk Controls:**
-- Capital: $5,000 mock
+- Capital: $500 mock
 - Position size: 1% of capital per trade
 - Leverage: 2x fixed
 - Max positions: 2 concurrent
@@ -129,7 +129,7 @@ All three use the same core 2-pole Butterworth low-pass filter and z-score norma
 
 **When it fires:**
 - Every hour
-Aimed at active mean-reversion trading on the 1h timeframe
+- Aimed at active mean-reversion trading on the 1h timeframe
 
 ---
 
@@ -148,7 +148,7 @@ Aimed at active mean-reversion trading on the 1h timeframe
 - Fires ~3x more signals than standard intraday
 
 **Risk Controls:**
-- Capital: $3,000 mock
+- Capital: $300 mock
 - Position size: 1.5% per trade + 0.5% per pyramid add (max 2 adds = 2.5% total per asset)
 - Leverage: 4x large caps (capped at 3x by Hyperliquid), 2x mid caps
 - Max positions: 4 concurrent
@@ -161,7 +161,9 @@ Aimed at active mean-reversion trading on the 1h timeframe
 
 ---
 
-## 3. Performance to Date
+## 3. Upstream Historical Performance (Reference Only)
+
+> **Important:** The figures below are historical testnet results from the upstream `aicodepathways/crypto-yall` project. They are included for reference only and are not Crypto Forge Labs performance results or a guarantee of future returns.
 
 **As of June 11, 2026 (50 days on testnet):**
 
@@ -208,7 +210,7 @@ The losses concentrated in April / mid-May choppy markets. Performance accelerat
 ```
                      ┌────────────────────┐
                      │  GitHub Actions    │
-                     │  (3 cron jobs)     │
+                     │ (scheduled jobs)   │
                      └─────────┬──────────┘
                                │
                 ┌──────────────┼──────────────┐
@@ -251,7 +253,7 @@ The losses concentrated in April / mid-May choppy markets. Performance accelerat
 1. **GitHub Actions** triggers each bot on its schedule
 2. Each bot **fetches market data** (yfinance for daily, Hyperliquid for intraday/30m)
 3. Computes **signals** using its strategy module
-4. Loads **prior state** from its private GitHub Gist (owned positions, drawdown tracking)
+4. Loads **prior state** from its secret GitHub Gist (owned positions, drawdown tracking)
 5. Calls **Hyperliquid API** to read current account state + place market orders
 6. Sends **email + Telegram notifications** on fills
 7. Writes **updated state** back to its Gist
@@ -259,7 +261,7 @@ The losses concentrated in April / mid-May choppy markets. Performance accelerat
 
 ### Why GitHub Gists for state
 
-- Free, private, version-controlled
+- Free, secret/unlisted, version-controlled (not truly private — keep the Gist URL private)
 - No database needed
 - Survives container restarts (Streamlit Cloud, GitHub Actions)
 - Each bot has its own Gist for clean separation
@@ -267,7 +269,7 @@ The losses concentrated in April / mid-May choppy markets. Performance accelerat
 ### Why GitHub Actions for execution
 
 - Free CI/CD with cron support
-- Runs on Azure cloud (non-US, helps with Hyperliquid US restriction concerns)
+- Runs on GitHub-hosted cloud runners
 - Built-in secret management
 - Logs every run for debugging
 
@@ -342,7 +344,7 @@ All three bots use the **same Hyperliquid account** but each tracks its own posi
 
 ## 6. Dashboard
 
-**URL:** https://crypto-yall-8s3evlspcczux5ztdmat9e.streamlit.app/
+**URL:** Not configured yet
 
 ### Sections (top to bottom)
 
@@ -521,9 +523,9 @@ The bot will rebuild state on its next run. Note: trade history will be lost.
 
 | Variable | Current | What it controls |
 |----------|---------|------------------|
-| `SEGREGATED_CAPITAL` | `10000` | Daily bot capital |
-| `INTRADAY_CAPITAL` | `5000` | Intraday Standard capital |
-| `AGGRESSIVE_CAPITAL` | `3000` | Aggressive bot capital |
+| `SEGREGATED_CAPITAL` | `1000` | Daily bot capital |
+| `INTRADAY_CAPITAL` | `500` | Intraday Standard capital |
+| `AGGRESSIVE_CAPITAL` | `300` | Aggressive bot capital |
 
 ```bash
 gh variable set AGGRESSIVE_CAPITAL -b "5000"
@@ -896,9 +898,9 @@ If you use separate sub-account API wallets, update the bot configuration to use
 | `KILL_SWITCH` | `ON` | Daily bot enable / `OFF` to halt |
 | `INTRADAY_KILL_SWITCH` | `ON` | Intraday Standard enable / `OFF` |
 | `AGGRESSIVE_KILL_SWITCH` | `ON` | Aggressive enable / `OFF` |
-| `SEGREGATED_CAPITAL` | `10000` | Daily bot capital pool |
-| `INTRADAY_CAPITAL` | `5000` | Intraday Standard capital pool |
-| `AGGRESSIVE_CAPITAL` | `3000` | Aggressive bot capital pool |
+| `SEGREGATED_CAPITAL` | `1000` | Daily bot capital pool |
+| `INTRADAY_CAPITAL` | `500` | Intraday Standard capital pool |
+| `AGGRESSIVE_CAPITAL` | `300` | Aggressive bot capital pool |
 | `DAILY_DD_PCT` | `5` | Daily bot DD halt threshold |
 | `INTRADAY_DD_PCT` | `5` | Intraday Standard DD halt |
 | `AGGRESSIVE_DD_PCT` | `3` | Aggressive bot DD halt |
