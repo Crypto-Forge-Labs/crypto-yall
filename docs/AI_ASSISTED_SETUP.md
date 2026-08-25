@@ -2,13 +2,15 @@
 
 Don't want to read the full setup guide? Use an AI assistant (ChatGPT, Claude, Gemini, etc.) to walk you through it step-by-step.
 
-This is the fastest way to get your own copy of the Crypto Y'all bot running. Plan for **30-45 minutes**. You do not need to be a developer.
+This is the fastest way to get your own copy of the Crypto Forge Labs bot running. Plan for **30-45 minutes**. You do not need to be a developer.
+
+> **Project note:** Crypto Forge Labs is based on the upstream `aicodepathways/crypto-yall` project. This guide points users to the Crypto Forge Labs fork for setup.
 
 ---
 
 ## How It Works
 
-1. Open ChatGPT (https://chat.openai.com) or Claude (https://claude.ai) — both have free tiers
+1. Open ChatGPT (https://chatgpt.com), Claude (https://claude.ai), Gemini, or another AI assistant
 2. Copy the entire prompt below (it's long on purpose — it contains every exact step so the AI doesn't have to guess)
 3. Paste it into the chat
 4. Follow the AI's instructions one step at a time
@@ -27,7 +29,7 @@ Copy from the line `=== START COPYING ===` all the way to `=== STOP COPYING ===`
 ```
 === START COPYING ===
 
-You are my patient setup guide. I want to set up my own personal copy of the Crypto Y'all trading bot. I am NOT a developer. Walk me through the setup ONE STEP AT A TIME. After each step, wait for me to confirm before moving on.
+You are my patient setup guide. I want to set up my own personal copy of the Crypto Forge Labs trading bot. I am NOT a developer. Walk me through the setup ONE STEP AT A TIME. After each step, wait for me to confirm before moving on.
 
 HOW TO GUIDE ME:
 1. Give me ONE step at a time. Never dump a wall of instructions.
@@ -42,11 +44,11 @@ WHAT WE'RE BUILDING:
 - 3 trading bots (Daily, Intraday, Aggressive) running on MY OWN Hyperliquid testnet account
 - Email alerts to my own Gmail
 - Optional Telegram alerts to my phone
-- 4 private GitHub Gists that store the bots' memory
+- 4 secret GitHub Gists that store the bots' memory
 - 12 GitHub Secrets and 13 GitHub Variables in my forked repo
 - A test trade to confirm everything works
 
-Everything runs on MY accounts. Nobody else can access my money, my keys, or my trades. I keep full control.
+Everything runs on MY accounts. I keep control of my accounts and credentials, and I never share private keys, passwords, or tokens in the AI chat.
 
 Guide me through these 8 phases in order. The exact steps are below — use them verbatim.
 
@@ -54,14 +56,14 @@ Guide me through these 8 phases in order. The exact steps are below — use them
 PHASE 1 - FORK THE REPO AND TURN ON ACTIONS (~5 min)
 ========================================================
 1.1  If I don't have a GitHub account, have me create one at https://github.com/signup and verify my email.
-1.2  Have me sign in, go to https://github.com/aicodepathways/crypto-yall , click "Fork" (top right), then "Create fork". I'll land on https://github.com/MY-USERNAME/crypto-yall - that's my personal copy. Ask me for MY-USERNAME and use it in every later URL.
+1.2  Have me sign in, go to https://github.com/Crypto-Forge-Labs/crypto-yall, click "Fork" (top right), then "Create fork". I'll land on https://github.com/MY-USERNAME/crypto-yall - that's my personal copy. Ask me for MY-USERNAME and use it in every later URL.
 1.3  GitHub turns off Actions on forks by default. Have me click the "Actions" tab in my fork, then click the green button "I understand my workflows, go ahead and enable them."
 
 ========================================================
 PHASE 2 - SET UP HYPERLIQUID (~15 min)
 ========================================================
 IMPORTANT THINGS TO TELL ME UP FRONT for this phase:
-- If I'm in the US: Hyperliquid blocks US IP addresses, so I'll need a VPN to open the website. (Once set up, the bot runs on GitHub's cloud, not my computer, so the bot itself is unaffected.)
+- Before using Hyperliquid, make sure the service is available to me in my location and follow its current terms and regional restrictions.
 - The testnet faucet can be claimed ONLY ONCE per wallet address, EVER. Don't rush it.
 - There are THREE different Hyperliquid URLs below. They are easy to mix up. Make me confirm I'm on the right one each time.
 
@@ -71,7 +73,7 @@ IMPORTANT THINGS TO TELL ME UP FRONT for this phase:
      - Tell me: this $5 is real money but it stays in MY Hyperliquid account and can be withdrawn later.
 2.3  Claim free testnet money: have me open https://app.hyperliquid-testnet.xyz/drip (this is the TESTNET url), connect the SAME wallet, click "Claim"/"Drip". I'll get 1,000 mock USDC. Remind me: one claim per address, ever.
 2.4  Generate the trading key (an "API wallet" - it can place orders but CANNOT withdraw funds):
-     - Have me open https://app.hyperliquid-testnet.xyz/API (TESTNET url), connect the wallet, click "Generate" next to API Wallets, name it "Crypto Yall Bot".
+     - Have me open https://app.hyperliquid-testnet.xyz/API (TESTNET url), connect the wallet, click "Generate" next to API Wallets, name it "Crypto Forge Labs Bot".
      - Tell me to COPY THE PRIVATE KEY it shows (starts with 0x, 64 hex characters) - it's shown only once - and SAVE IT to my notes now. Do NOT paste it to you.
      - Have me sign the authorization transaction (free on testnet).
      - Have me also COPY MY MAIN ACCOUNT ADDRESS (top right of Hyperliquid, starts with 0x, 40 hex characters) and SAVE IT. This is different from the API wallet key.
@@ -81,9 +83,9 @@ IMPORTANT THINGS TO TELL ME UP FRONT for this phase:
 PHASE 3 - STATE STORAGE: TOKEN + 4 GISTS (~10 min)
 ========================================================
 3.1  Create a GitHub token so the bot can read/write its memory:
-     - Have me open https://github.com/settings/tokens/new , name it "Crypto Yall Bot", set expiration to 1 year, and check ONLY the "gist" scope box. Click "Generate token".
+     - Have me open https://github.com/settings/tokens/new, name it "Crypto Forge Labs Bot", set expiration to 1 year, and check ONLY the "gist" scope box. Click "Generate token".
      - Tell me to COPY the token (starts with ghp_) immediately and SAVE IT - shown only once.
-3.2  Create 4 private Gists. For EACH one: open https://gist.github.com , set the filename, put exactly {} (two curly braces) as the content, and click "Create secret gist" (NOT public). Then copy the URL - the ID is the long string after the last slash (e.g. gist.github.com/name/abc123 -> the ID is abc123). Have me save each ID with the label shown:
+3.2  Create 4 secret Gists. For EACH one: open https://gist.github.com , set the filename, put exactly {} (two curly braces) as the content, and click "Create secret gist" (NOT public). Treat each secret Gist URL/ID as sensitive because anyone with the URL can view it. Then copy the URL - the ID is the long string after the last slash (e.g. gist.github.com/name/abc123 -> the ID is abc123). Have me save each ID with the label shown:
         filename signal_state.json      -> save its ID as GIST_ID
         filename trading_state.json     -> save its ID as TRADING_GIST_ID
         filename intraday_state.json    -> save its ID as INTRADAY_GIST_ID
@@ -95,7 +97,7 @@ PHASE 4 - EMAIL ALERTS VIA GMAIL (~10 min)
 ========================================================
 4.1  Use an existing Gmail or make a new one (a new one keeps bot mail separate).
 4.2  Turn on 2-Step Verification (required for app passwords): https://myaccount.google.com/security -> "2-Step Verification" -> turn on if off (needs my phone).
-4.3  Create an app password: https://myaccount.google.com/apppasswords -> name "Crypto Yall Bot" -> "Create" -> Google shows a 16-character password. Tell me to COPY and SAVE it immediately (shown once).
+4.3  Create an app password: https://myaccount.google.com/apppasswords -> name "Crypto Forge Labs Bot" -> "Create" -> Google shows a 16-character password. Tell me to COPY and SAVE it immediately (shown once).
      I now have saved: my Gmail ADDRESS and the 16-character APP PASSWORD.
 
 ========================================================
@@ -103,7 +105,7 @@ PHASE 5 - TELEGRAM ALERTS (OPTIONAL, ~10 min)
 ========================================================
 Tell me I can skip this whole phase if I only want email. If I skip it, I'll leave the two Telegram secrets blank in Phase 6.
 5.1  If needed, install Telegram (https://telegram.org).
-5.2  In Telegram, search @BotFather, send /newbot, set a name ("Crypto Yall Bot") and a unique username ending in "bot". BotFather gives a TOKEN - have me copy and save it.
+5.2  In Telegram, search @BotFather, send /newbot, set a name ("Crypto Forge Labs Bot") and a unique username ending in "bot". BotFather gives a TOKEN - have me copy and save it.
 5.3  Get my chat ID: search for my new bot by its username, tap "Start" (or send "hello"), then open in a browser:
         https://api.telegram.org/bot<MY_BOT_TOKEN>/getUpdates
      (replace <MY_BOT_TOKEN> with the token). In the response find "chat":{"id": followed by a number - that number is my CHAT ID. Save it.
@@ -182,7 +184,7 @@ TROUBLESHOOTING (use these exact fixes if a step fails)
 - Constant "0 trades executed" emails    -> normal in a quiet market; the bot is running, no signals fired.
 
 HEADS-UP TO TELL ME ONCE, NEAR THE END (so I'm not surprised later):
-GitHub's free tier is 2,000 Actions minutes/month on a PRIVATE repo. Each bot run is about 1 minute, and the Aggressive bot alone runs 48x/day which is about 1,440 min/month - over half the free tier from one bot. If I run low on minutes I can: make my fork PUBLIC (the code is already public, so nothing secret is exposed - my SECRETS stay private either way), upgrade to GitHub Pro (about $4/mo for 3,000 min), or pause the Aggressive bot.
+GitHub Actions usage limits and pricing can change. Near the end, remind me to check the current Actions usage for my plan. The Aggressive bot runs frequently and can consume a large share of included Actions minutes. If usage becomes an issue, I can reduce or pause its schedule, or review GitHub's current plan options. GitHub Secrets are not displayed in the public repository, but I should still review workflow code before enabling it.
 
 Start with Phase 1, step 1.1. Ask me for my GitHub username when we get there, and wait for my confirmation between every step. Let's go.
 
@@ -212,9 +214,9 @@ A typical conversation looks like this:
 >
 > **AI:** Perfect. What's your GitHub username? I'll use it in the links as we go.
 >
-> **You:** cryptojosh
+> **You:** mygithubname
 >
-> **AI:** Thanks. Step 1.2: go to https://github.com/aicodepathways/crypto-yall and click "Fork" in the top right, then "Create fork". You'll land on https://github.com/cryptojosh/crypto-yall. Done? Reply 'done' when you've forked it.
+> **AI:** Thanks. Step 1.2: go to https://github.com/Crypto-Forge-Labs/crypto-yall and click "Fork" in the top right, then "Create fork". You'll land on https://github.com/mygithubname/crypto-yall. Done? Reply 'done' when you've forked it.
 >
 > *... and so on, one step at a time*
 
@@ -226,8 +228,8 @@ When using an AI assistant for setup, follow these rules:
 
 ### Things you CAN share with the AI:
 - Your GitHub username
-- Gist URLs (so it can help you read off the ID)
-- Your Hyperliquid main wallet address (it's public on the blockchain anyway)
+- The Gist ID only, if needed for troubleshooting. Avoid sharing secret Gist URLs unnecessarily.
+- Your Hyperliquid main wallet address, if needed for troubleshooting (it is public blockchain information)
 - Error messages from failed steps
 - Screenshots of confusing UI
 
@@ -239,7 +241,7 @@ When using an AI assistant for setup, follow these rules:
 
 The prompt tells the AI never to ask for these. If it ever does, something's off — refuse and re-paste the original prompt.
 
-The reason: any private value you paste into an AI chat could theoretically be logged or seen by staff at the AI company. The AI never needs these to help you — it only needs to know *where in GitHub* you should paste them.
+The reason: private values should stay out of chat transcripts. The AI does not need the secret itself to guide setup — it only needs to tell you *where in GitHub* to paste it.
 
 ### How to handle "secret" values:
 
@@ -261,7 +263,7 @@ If the AI tells you something that doesn't match what you see, or a step fails:
 1. **Don't panic.** Most issues are easy to fix.
 2. **Trust the screen over the AI.** If the AI describes a button that isn't there, tell it exactly what you *do* see.
 3. **Refer to [USER_SETUP_GUIDE.md](USER_SETUP_GUIDE.md)** — the authoritative manual version, with the same steps in written form.
-4. **If you're really stuck**, contact Josh or the developer with: which step failed, your AI conversation, and any error messages.
+4. **If you're still stuck**, review the workflow logs and the troubleshooting guide, then ask for help using the step number and the exact error message. Never include private keys, passwords, seed phrases, or tokens.
 
 ---
 
@@ -282,11 +284,11 @@ After setup, double-check by hand:
 
 ### Use the same AI thread throughout
 
-Don't start over partway through — the AI remembers what you've already done. Stay in one chat from start to finish.
+Stay in the same chat where possible so the setup context remains together. If you need to start a new chat, tell the AI which phase and step you reached.
 
 ### Don't multitask
 
-If you start the setup, finish it in one sitting. Pausing for hours and coming back tends to make the AI lose context and re-ask questions.
+You can pause if needed. When you come back, state the phase and step you last completed so the AI can continue accurately.
 
 ---
 
@@ -326,13 +328,13 @@ The AI can walk you through updating the `NOTIFY_EMAILS` secret.
 
 ## Frequently Asked Questions
 
-**Q: Which AI should I use — ChatGPT or Claude?**
+**Q: Which AI should I use?**
 
-A: Both work. Claude tends to be slightly better at long, multi-step instructional tasks; ChatGPT is fine. Use whichever you're comfortable with.
+A: Use whichever AI assistant you're comfortable with. The important part is to paste the full setup prompt and keep the same conversation open while you work through the phases.
 
-**Q: Do I need a paid plan?**
+**Q: Do I need a paid AI plan?**
 
-A: No. The free tier of either is enough for this setup.
+A: Not necessarily. Use a plan that supports a conversation long enough to work through the setup prompt.
 
 **Q: Can I do this on my phone?**
 
@@ -344,7 +346,7 @@ A: Tell it where you are: "We've finished Phases 1-4 and just set up Gmail. Now 
 
 **Q: Is this setup really safe?**
 
-A: As long as you follow the security notes above (never paste private values to the AI), yes. The bot runs on your own GitHub account, trades only your own money, uses a trading-only key that can't withdraw, and you have full kill-switch control.
+A: The setup is designed so your credentials stay in your own accounts and GitHub Secrets. Never paste private keys, passwords, seed phrases, or tokens into an AI chat. Test on Hyperliquid testnet first, review the code and workflow permissions, and only use mainnet when you understand the risks and controls.
 
 **Q: Can I skip the AI and just do it manually?**
 
