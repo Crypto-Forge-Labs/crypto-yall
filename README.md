@@ -83,7 +83,7 @@ All three use the same core 2-pole Butterworth low-pass filter and z-score norma
 **File:** `hyperliquid_executor.py`
 **Workflow:** `.github/workflows/execute-trades.yml`
 **Schedule:** Daily at 00:15 UTC (often delayed 30-60min by GitHub Actions free tier)
-**State Gist:** `d35732f9c123e95a4dc13a51855d21de` (`TRADING_GIST_ID`)
+**State Gist:** YOUR_TRADING_GIST_ID
 
 **Strategy:**
 - Pulls daily OHLCV from yfinance (anchored to 2022-03-01 start date for fold stability)
@@ -109,7 +109,7 @@ All three use the same core 2-pole Butterworth low-pass filter and z-score norma
 **File:** `intraday_executor.py`
 **Workflow:** `.github/workflows/execute-intraday.yml`
 **Schedule:** Every hour at :05 UTC
-**State Gist:** `02cbe06fb1c4eb8afb5fad321aa3a251` (`INTRADAY_GIST_ID`)
+**State Gist:** YOUR_INTRADAY_GIST_ID
 
 **Strategy:**
 - Pulls 1-hour candles directly from Hyperliquid (no auth needed)
@@ -129,7 +129,7 @@ All three use the same core 2-pole Butterworth low-pass filter and z-score norma
 
 **When it fires:**
 - Every hour
-- Aimed at Josh's manual approach with his members — active mean reversion on 1h timeframe
+Aimed at active mean-reversion trading on the 1h timeframe
 
 ---
 
@@ -138,7 +138,7 @@ All three use the same core 2-pole Butterworth low-pass filter and z-score norma
 **File:** `aggressive_executor.py`
 **Workflow:** `.github/workflows/execute-aggressive.yml`
 **Schedule:** Every 30 minutes
-**State Gist:** `0917280713a7781dc72a984147eef295` (`AGGRESSIVE_GIST_ID`)
+**State Gist:** YOUR_AGGRESSIVE_GIST_ID
 
 **Strategy:**
 - Same z-score 2-pole oscillator but on 30-minute candles
@@ -390,9 +390,9 @@ Set at https://share.streamlit.io > app settings > Secrets:
 
 ```toml
 GIST_TOKEN = "ghp_..."
-TRADING_GIST_ID = "d35732f9c123e95a4dc13a51855d21de"
-INTRADAY_GIST_ID = "02cbe06fb1c4eb8afb5fad321aa3a251"
-AGGRESSIVE_GIST_ID = "0917280713a7781dc72a984147eef295"
+TRADING_GIST_ID = "YOUR_TRADING_GIST_ID"
+INTRADAY_GIST_ID = "YOUR_INTRADAY_GIST_ID"
+AGGRESSIVE_GIST_ID = "YOUR_AGGRESSIVE_GIST_ID"
 ```
 
 ---
@@ -464,13 +464,13 @@ gh run list --workflow=execute-aggressive.yml --limit 5
 
 ```bash
 # Daily
-gh gist view d35732f9c123e95a4dc13a51855d21de -f trading_state.json | jq '.last_equity, .open_positions, .owned_coins'
+gh gist view YOUR_TRADING_GIST_ID -f trading_state.json | jq '.last_equity, .open_positions, .owned_coins'
 
 # Intraday
-gh gist view 02cbe06fb1c4eb8afb5fad321aa3a251 -f intraday_state.json | jq '.last_equity, .open_positions'
+gh gist view YOUR_INTRADAY_GIST_ID -f intraday_state.json | jq '.last_equity, .open_positions'
 
 # Aggressive
-gh gist view 0917280713a7781dc72a984147eef295 -f aggressive_state.json | jq '.last_equity, .open_positions, .pyramid_state'
+gh gist view YOUR_AGGRESSIVE_GIST_ID -f aggressive_state.json | jq '.last_equity, .open_positions, .pyramid_state'
 ```
 
 ### Pause a single bot (kill switch)
@@ -497,7 +497,7 @@ gh variable set AGGRESSIVE_KILL_SWITCH -b "OFF"
 ### Reset signal state (force re-alert)
 
 ```bash
-gh gist edit ad73d92e1fa245c2725e06f60d68d13b -f signal_state.json - <<< '{}'
+gh gist edit YOUR_SIGNAL_GIST_ID -f signal_state.json - <<< '{}'
 gh workflow run signal-check.yml
 ```
 
@@ -508,7 +508,7 @@ If a bot's `owned_coins` gets out of sync with actual Hyperliquid positions:
 ```bash
 # Edit the Gist directly, set "owned_coins" to actual coins held
 # Or wipe entirely:
-gh gist edit d35732f9c123e95a4dc13a51855d21de -f trading_state.json - <<< '{}'
+gh gist edit YOUR_TRADING_GIST_ID -f trading_state.json - <<< '{}'
 ```
 
 The bot will rebuild state on its next run. Note: trade history will be lost.
