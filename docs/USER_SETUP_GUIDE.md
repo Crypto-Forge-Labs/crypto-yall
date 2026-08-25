@@ -1,6 +1,8 @@
-# Crypto Y'all — Personal Bot Setup Guide
+# Crypto Forge Labs — Personal Bot Setup Guide
 
-This guide walks you through setting up your own personal copy of the Crypto Y'all trading bots. When you're done, you'll have three bots running on your own Hyperliquid account, sending alerts to your own email and Telegram, completely independent from anyone else.
+This guide walks you through setting up your own personal copy of the Crypto Forge Labs trading bots. When you're done, you'll have three bots running on your own Hyperliquid account and sending alerts to your own email and optional Telegram account.
+
+> **Project note:** Crypto Forge Labs is based on the upstream `aicodepathways/crypto-yall` project. This guide points users to the Crypto Forge Labs fork for setup.
 
 ---
 
@@ -19,8 +21,8 @@ Don't want to read 90 minutes of instructions? Use an AI assistant to walk you t
 - No need to read the entire guide upfront
 
 **Cons:**
-- You need a (free) ChatGPT or Claude account
-- AI can occasionally hallucinate details — verify critical values (private keys, secrets) using this guide as a backup
+- You need access to ChatGPT, Claude, Gemini, or another AI assistant
+- AI can occasionally get interface details wrong — verify critical steps against what you actually see on screen
 
 ### Option 2: Manual Setup (Read This Guide)
 
@@ -56,15 +58,15 @@ By the end of this guide, you'll have:
 
 1. **A forked copy of the bot code** on your GitHub account
 2. **Three trading bots** running on your Hyperliquid account:
-   - Daily bot (1 trade per day)
-   - Intraday bot (1 trade per hour)
-   - Aggressive bot (1 trade per 30 minutes)
+   - Daily bot (checks once per day)
+   - Intraday bot (checks once per hour)
+   - Aggressive bot (checks every 30 minutes)
 3. **Email alerts** to your inbox whenever a bot opens or closes a trade
 4. **Optional Telegram alerts** to your phone
 5. **A dashboard** showing positions and PnL (optional but recommended)
 6. **Complete control** over your own bot — you can pause, restart, change capital, anything
 
-You will own and control all of this. Josh and Brendan won't have access to your accounts, your money, or your trading data.
+You control your own accounts and credentials. Keep all private keys, passwords, seed phrases, and tokens private and store them only in services you trust.
 
 ---
 
@@ -76,11 +78,10 @@ You will own and control all of this. Josh and Brendan won't have access to your
 2. Sign up with your email
 3. Verify your email when prompted
 
-### Step 1.2: Fork the Crypto Y'all repo
+### Step 1.2: Fork the Crypto Forge Labs repo
 
 1. Sign in to GitHub
-2. Visit https://github.com/aicodepathways/crypto-yall
-3. Click the "**Fork**" button in the top right
+2. Visit https://github.com/Crypto-Forge-Labs/crypto-yall 3. Click the "**Fork**" button in the top right
 4. On the next page, leave defaults and click "**Create fork**"
 5. You'll be redirected to `https://github.com/<your-username>/crypto-yall`
 
@@ -109,7 +110,7 @@ If you've used Hyperliquid before, skip to Step 2.2.
 3. Choose your wallet (Metamask, Rabby, Coinbase Wallet, etc.)
 4. Sign the connection prompt
 
-**US-based users:** Hyperliquid blocks US IP addresses by default. You'll need a VPN to access the website. Once your bot is set up, the bot itself runs on GitHub's cloud (not your computer) so it isn't affected by the geo-block.
+**Regional availability:** Before using Hyperliquid, make sure the service is available to you in your location and follow its current terms and regional restrictions.
 
 ### Step 2.2: Activate your account by depositing $5+ USDC
 
@@ -139,8 +140,8 @@ The API wallet is a trading-only key. It can place orders but cannot withdraw fu
 1. Visit https://app.hyperliquid-testnet.xyz/API
 2. Connect your wallet
 3. Click "Generate" next to API Wallets
-4. Name it: "Crypto Yall Bot"
-5. **Copy the private key it shows you** (starts with `0x...`) — you'll only see this once. Paste it somewhere safe right now (a password manager, a temporary text file, anything you trust).
+4. Name it: "Crypto Forge Labs Bot"
+5. **Copy the private key it shows you** (starts with `0x...`) — you'll only see this once. Save it somewhere secure right now, preferably in a trusted password manager. Do not paste it into an AI chat or public document.
 6. Sign the authorization transaction (free on testnet)
 7. **Copy your main account address** (top right of Hyperliquid, starts with `0x...`) — this is your wallet address, not the API wallet
 
@@ -162,7 +163,7 @@ The bots remember what positions they own using GitHub Gists (a simple file-stor
 This token lets the bot read and write to your Gists.
 
 1. Visit https://github.com/settings/tokens/new
-2. Name: "Crypto Yall Bot"
+2. Name: "Crypto Forge Labs Bot"
 3. Expiration: 1 year (or "No expiration" if you'll remember to renew)
 4. Scopes: check **only** the box that says "**gist**"
 5. Scroll to the bottom and click "**Generate token**"
@@ -170,9 +171,9 @@ This token lets the bot read and write to your Gists.
 
 Save this somewhere safe.
 
-### Step 3.2: Create 4 private Gists
+### Step 3.2: Create 4 secret Gists
 
-The bots store their state in 4 separate Gists. Create all 4:
+The bots store their state in 4 separate secret Gists. Secret Gists are unlisted, not truly private, so keep each Gist URL and ID private.
 
 For each Gist:
 1. Visit https://gist.github.com
@@ -214,7 +215,7 @@ Required to create app passwords.
 ### Step 4.3: Create an app password
 
 1. Visit https://myaccount.google.com/apppasswords
-2. Name: "Crypto Yall Bot"
+2. Name: "Crypto Forge Labs Bot"
 3. Click "Create"
 4. Google will show you a 16-character password. **Copy it immediately** — you can't see it again.
 5. Save it somewhere safe
@@ -237,8 +238,8 @@ If you don't have it: https://telegram.org/
 
 1. In Telegram, search for `@BotFather`
 2. Send it: `/newbot`
-3. When asked for a name, type: "Crypto Yall Bot"
-4. When asked for a username, type something unique (ending in "bot"), like: "MyCryptoYallBot"
+3. When asked for a name, type: "Crypto Forge Labs Bot"
+4. When asked for a username, type something unique (ending in "bot"), like: "MyCryptoForgeBot"
 5. BotFather will give you a token (long string of numbers and letters). **Copy it.**
 
 ### Step 5.3: Get your chat ID
@@ -284,7 +285,7 @@ Secrets are encrypted values your bot uses. They're hidden once you save them.
 | `TELEGRAM_BOT_TOKEN` | Your bot token from Step 5.2 (or leave blank if skipping Telegram) |
 | `TELEGRAM_CHAT_ID` | Your chat ID from Step 5.3 (or leave blank if skipping Telegram) |
 
-Double-check every value. Even one extra space or missing character will cause the bot to fail.
+Double-check every value. Even one extra space or missing character can cause the bot to fail. Never paste secret values into an AI chat.
 
 ### Step 6.2: Add Variables
 
@@ -406,7 +407,7 @@ Edit `SEGREGATED_CAPITAL`, `INTRADAY_CAPITAL`, or `AGGRESSIVE_CAPITAL` in the va
 
 ## Part 9: Going to Mainnet (Real Money)
 
-After 2 weeks of clean testnet operation, you may want to move to real money.
+Only consider moving to real money after you have thoroughly tested the bot on testnet, understand its behavior and risks, and are comfortable with every control in this guide.
 
 ### Pre-mainnet checklist
 
@@ -424,7 +425,7 @@ After 2 weeks of clean testnet operation, you may want to move to real money.
    - Update `HL_PRIVATE_KEY` secret with the new mainnet key
 
 2. **Bridge real USDC**
-   - Bridge a small amount ($500-$1000) to your mainnet account via app.hyperliquid.xyz/deposit
+   - Bridge only an amount you can afford to lose to your mainnet account via app.hyperliquid.xyz/deposit
    - Distribute it however you want across the three bots (mentally — they share the account)
 
 3. **Reset your state Gists**
@@ -469,24 +470,28 @@ Normal in quiet markets. The bot is running but no signals are firing. Wait for 
 
 If you didn't enable Actions in Step 1.3, the bots won't run. Go back to that step.
 
-### My free GitHub Actions minutes ran out
+### My GitHub Actions usage is running high
 
-GitHub gives you 2,000 free minutes per month for private repos, or unlimited for public repos.
+GitHub Actions limits and pricing can change, so check the current usage and billing information for your GitHub plan.
 
-Each bot run uses about 1 minute. The Aggressive bot runs 48 times per day = 1,440 minutes per month — already over half your free tier just from that one bot.
+The Aggressive bot runs frequently and can use a large share of included Actions minutes.
 
 Options:
-- Make the fork public (your trading strategy isn't a secret — the code is the same as the original public repo)
-- Upgrade to GitHub Pro ($4/month) — gets you 3,000 minutes
-- Pause the Aggressive bot if you're cost-sensitive
+- Reduce or pause the Aggressive bot schedule
+- Review your repository visibility and GitHub's current Actions policy
+- Review GitHub's current paid plan or Actions billing options if needed
+
+Your repository secrets are not displayed publicly, but always review workflow code before enabling it.
 
 ### Something else is wrong
 
-Reach out to Josh or the original developer. Provide:
+Use the troubleshooting guide and workflow logs first. If you still need help, provide:
 - A screenshot of the error
 - Which workflow failed
 - When it started failing
 - What you changed most recently (if anything)
+
+Never include private keys, passwords, seed phrases, GitHub tokens, Gmail app passwords, or Telegram bot tokens in screenshots or support messages.
 
 ---
 
@@ -520,7 +525,7 @@ After ~2 minutes you'll have your own dashboard URL. Bookmark it.
 - This is software that places real trades with real money on a leveraged perpetual futures exchange.
 - You can lose all of your bridged capital, and (with leverage) potentially get liquidated below your initial deposit if you don't manage risk.
 - Past performance on testnet does not guarantee future performance on mainnet.
-- The original creators do not provide investment advice and are not responsible for your trading results.
+- This guide and project documentation do not provide investment advice or guarantee trading results.
 - You are solely responsible for your own trades, your own taxes, and your own decisions.
 - Don't use money you can't afford to lose entirely.
 
@@ -532,7 +537,7 @@ Use this to verify you've completed everything:
 
 - [ ] Part 1: Forked the repo, enabled Actions
 - [ ] Part 2: Connected Hyperliquid wallet, activated mainnet with $5+ USDC, claimed testnet faucet, generated API wallet on testnet
-- [ ] Part 3: Created GitHub PAT, created 4 Gists
+- [ ] Part 3: Created GitHub PAT, created 4 secret Gists
 - [ ] Part 4: Set up Gmail app password
 - [ ] Part 5: (optional) Created Telegram bot, got chat ID
 - [ ] Part 6: Added all 12 secrets and 13 variables
@@ -541,4 +546,4 @@ Use this to verify you've completed everything:
 - [ ] You're getting alerts on email (and Telegram if enabled)
 - [ ] You know how to pause via kill switches
 
-Welcome to Crypto Y'all. Trade safe.
+Welcome to Crypto Forge Labs. Test carefully and manage risk.
