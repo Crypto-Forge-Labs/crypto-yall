@@ -913,7 +913,7 @@ If you use separate sub-account API wallets, update the bot configuration to use
 ### Inspect what each bot did today
 
 ```bash
-for gist in d35732f9c123e95a4dc13a51855d21de 02cbe06fb1c4eb8afb5fad321aa3a251 0917280713a7781dc72a984147eef295; do
+for gist in YOUR_TRADING_GIST_ID YOUR_INTRADAY_GIST_ID YOUR_AGGRESSIVE_GIST_ID; do
   echo "=== Gist $gist ==="
   gh gist view $gist --files | head -1 | xargs -I {} gh gist view $gist -f {} | jq '.last_run, .last_equity, .open_positions'
   echo ""
@@ -945,9 +945,9 @@ gh run view <RUN_ID> --log
 
 ## Contact
 
-- **System builder:** Brendan Li (`nocodepathways@gmail.com`)
-- **Client:** Josh Rhodes — Crypto Y'all (`josh@cryptoyall.co`)
+- **Project:** Crypto Forge Labs
+- **Upstream project:** `aicodepathways/crypto-yall`
 
 ---
 
-*Last updated: handoff version, June 2026*
+*Last updated: Crypto Forge Labs version, August 2026*
