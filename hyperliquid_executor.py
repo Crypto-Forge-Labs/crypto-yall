@@ -2,14 +2,14 @@
 hyperliquid_executor.py — Live trading executor for Hyperliquid DEX.
 
 Translates signals from signal_utils into actual trades on Hyperliquid.
-Runs daily via GitHub Actions, enforces risk guardrails, and sends
+Can be triggered by the hosted scheduler service, enforces risk guardrails, and sends
 execution notifications through notifier.py.
 
 Required environment variables:
     HL_PRIVATE_KEY      – API wallet private key (trading-only, no withdraw)
     HL_ACCOUNT_ADDRESS  – Main wallet address (0x…) that owns the funds
     HL_TESTNET          – "true" to use testnet, else mainnet
-    SEGREGATED_CAPITAL  – USDC allocated to bot (e.g. "10000")
+    SEGREGATED_CAPITAL  – USDC allocated to bot (e.g. "1000")
     DAILY_DD_PCT        – Max daily drawdown % before auto-pause (e.g. "5")
     MAX_POSITIONS       – Max concurrent open positions (4 aggressive)
     KILL_SWITCH         – "OFF" to halt all trading, else trades enabled
@@ -457,7 +457,7 @@ def _send_email(results: list[dict], status_summary: str):
 
     html = f"""
     <div style="font-family:Arial,Helvetica,sans-serif;background:#ffffff;color:#1a1a1a;padding:24px;border:1px solid #e1e4e8;border-radius:8px;max-width:760px;">
-        <h2 style="color:#0969da;margin:0 0 8px 0;">Crypto Y'all Trade Execution</h2>
+        <h2 style="color:#0969da;margin:0 0 8px 0;">Crypto Forge Labs Trade Execution</h2>
         <p style="color:#57606a;margin:0 0 8px 0;">{dt.datetime.utcnow().strftime('%Y-%m-%d %H:%M UTC')}</p>
         <p style="color:#1a1a1a;margin:0 0 16px 0;"><strong>Status:</strong> {status_summary}</p>
         {f'<table style="width:100%;border-collapse:collapse;margin-top:16px;background:#ffffff;"><tr style="background:#f6f8fa;color:#57606a;text-transform:uppercase;font-size:0.75em;letter-spacing:0.5px;"><th style="padding:10px;text-align:left;">Asset</th><th style="padding:10px;text-align:left;">Action</th><th style="padding:10px;text-align:left;">Status</th><th style="padding:10px;text-align:left;">Size</th><th style="padding:10px;text-align:left;">Fill Price</th><th style="padding:10px;text-align:left;">Reason</th></tr>{rows}</table>' if results else '<p style="color:#1a1a1a;">No trades executed this cycle.</p>'}
@@ -466,7 +466,7 @@ def _send_email(results: list[dict], status_summary: str):
 
     msg = MIMEMultipart("alternative")
     summary = f"{len(results)} trade(s)" if results else "No trades"
-    msg["Subject"] = f"[Crypto Y'all] Execution: {summary}"
+    msg["Subject"] = f"[Crypto Forge Labs] Execution: {summary}"
     msg["From"] = user
     msg["To"] = ", ".join(recipient_list)
     msg.attach(MIMEText(html, "html"))
@@ -485,7 +485,7 @@ def _send_telegram(results: list[dict], status_summary: str):
 
     chat_ids = [c.strip() for c in chat_ids_raw.split(",") if c.strip()]
 
-    lines = ["*Crypto Y'all Trade Execution*", "", f"Status: {status_summary}", ""]
+    lines = ["*Crypto Forge Labs Trade Execution*", "", f"Status: {status_summary}", ""]
     for r in results:
         status = r.get("status", "?").upper()
         lines.append(f"*{r['ticker']}* — {r['action']} [{status}]")
@@ -548,7 +548,7 @@ def main():
     # Compute signals and decide trades
     signals = compute_all_signals()
     open_positions = get_open_positions(info, address)
-    capital = float(os.environ.get("SEGREGATED_CAPITAL", "10000"))
+    capital = float(os.environ.get("SEGREGATED_CAPITAL", "1000"))
     max_positions = int(os.environ.get("MAX_POSITIONS", "4"))
 
     # Filter out assets not listed on this Hyperliquid environment

@@ -1,7 +1,7 @@
 """
 trading_state.py — Read-only access to live trading state for the dashboard.
 
-The executors write state to private Gists; this module fetches them
+The executors write state to secret/unlisted Gists; this module fetches them
 for display without any trading capability.
 """
 

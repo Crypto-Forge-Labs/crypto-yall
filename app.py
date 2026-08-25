@@ -27,8 +27,8 @@ HL_TICKER_MAP = {
 # ── Page config ──────────────────────────────────────────────────────────────
 
 st.set_page_config(
-    page_title="Crypto Y'all — Regime Dashboard",
-    page_icon="assets/cryptoyall-main-3d-inverted-rgb-775px@72ppi.png",
+    page_title="Crypto Forge Labs — Regime Dashboard",
+    page_icon="⚒️",
     layout="wide",
     initial_sidebar_state="expanded",
 )
@@ -109,7 +109,7 @@ st.markdown(
 
 # ── Sidebar ──────────────────────────────────────────────────────────────────
 
-st.sidebar.image("assets/cryptoyall-main-3d-inverted-rgb-775px@72ppi.png", width="stretch")
+st.sidebar.markdown("## ⚒️ Crypto Forge Labs")
 st.sidebar.markdown("")  # spacer
 ASSETS = {
     "BTC-USD": "Bitcoin (BTC)",
@@ -150,7 +150,7 @@ st.sidebar.markdown("---")
 st.sidebar.markdown("#### Capital & Leverage Simulator")
 starting_capital = st.sidebar.number_input(
     "Starting Capital ($)", min_value=100, max_value=10_000_000,
-    value=10_000, step=1_000, format="%d",
+    value=1_000, step=100, format="%d",
 )
 bull_leverage = st.sidebar.slider(
     "Bull Regime Leverage", min_value=1.0, max_value=5.0, value=3.0, step=0.5,
@@ -959,7 +959,7 @@ with st.expander(f"Walk-Forward Fold Parameters ({mode_label})"):
 
 st.markdown(
     "<div style='text-align:center; color:#484f58; margin-top:40px;'>"
-    "Crypto Y'all  ·  Strictly causal  ·  No look-ahead bias  ·  Walk-forward OOS only"
+    "Crypto Forge Labs  ·  Strictly causal  ·  No look-ahead bias  ·  Walk-forward OOS only"
     "</div>",
     unsafe_allow_html=True,
 )

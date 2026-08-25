@@ -7,6 +7,8 @@ A multi-strategy algorithmic trading system for crypto perpetual futures on Hype
 
 ---
 
+> **Scheduler:** Automated bot runs are hosted on Render and triggered by cron-job.org. See [`docs/CRON_JOB_SETUP.md`](docs/CRON_JOB_SETUP.md). GitHub Actions workflows are retained for manual fallback only.
+
 ## Quick Links by Role
 
 ### If you're a **non-technical operator**

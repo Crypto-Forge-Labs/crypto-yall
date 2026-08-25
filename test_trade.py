@@ -26,7 +26,7 @@ def main():
 
     base_url = constants.TESTNET_API_URL if is_testnet else constants.MAINNET_API_URL
     print(f"Connecting to: {base_url}")
-    print(f"Account: {account_address}")
+    print("Account: configured (address hidden from logs)")
 
     wallet = Account.from_key(priv_key)
     info = Info(base_url, skip_ws=True)
@@ -49,7 +49,7 @@ def main():
         print("   To fund the testnet account, go to https://app.hyperliquid-testnet.xyz")
         print("   connect the main wallet, and use the faucet to deposit test USDC.")
         print("\n   API connection confirmed working:")
-        print(f"   - Authenticated as {account_address}")
+        print("   - Authentication confirmed (address hidden from logs)")
         print(f"   - Read account state successfully")
         print(f"   - Read market data successfully")
         return
@@ -64,7 +64,7 @@ def main():
         print(f"Leverage set warning: {e}")
 
     resp = exchange.market_open("BTC", True, size)
-    print(f"Open response: {resp}")
+    print("Open order submitted; checking fill/position status")
 
     time.sleep(3)
 
@@ -72,12 +72,12 @@ def main():
     state = info.user_state(account_address)
     positions = [p["position"] for p in state.get("assetPositions", []) if p["position"]["coin"] == "BTC"]
     if positions:
-        print(f"Position confirmed: {positions[0]}")
+        print("Position confirmed on Hyperliquid")
 
     # 5. Close position
     print("\nClosing position…")
     close_resp = exchange.market_close("BTC")
-    print(f"Close response: {close_resp}")
+    print("Close order submitted")
 
     # 6. Final state
     time.sleep(3)

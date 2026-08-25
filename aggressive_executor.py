@@ -1,5 +1,5 @@
 """
-aggressive_executor.py — 30-min trade executor with pyramiding.
+aggressive_executor.py — Aggressive trade executor with pyramiding.
 
 Higher trade frequency than the standard intraday bot. Tighter stops,
 tighter drawdown halt, more max positions. Operates on a completely
@@ -8,7 +8,7 @@ separate capital pool and state Gist.
 Required environment variables:
     HL_PRIVATE_KEY / HL_ACCOUNT_ADDRESS / HL_TESTNET
     GIST_TOKEN / AGGRESSIVE_GIST_ID    (separate from daily & intraday Gists)
-    AGGRESSIVE_CAPITAL                  (capital pool, e.g. 3000)
+    AGGRESSIVE_CAPITAL                  (capital pool, e.g. 300)
     AGGRESSIVE_MAX_POSITIONS            (defaults to 4)
     AGGRESSIVE_DD_PCT                   (defaults to 3 — tighter than others)
     AGGRESSIVE_KILL_SWITCH              ("OFF" halts aggressive only)
@@ -284,7 +284,7 @@ def main():
 
     signals = compute_aggressive_signals()
     open_positions = get_open_positions(info, address)
-    capital = float(os.environ.get("AGGRESSIVE_CAPITAL", "3000"))
+    capital = float(os.environ.get("AGGRESSIVE_CAPITAL", "300"))
     max_positions = int(os.environ.get("AGGRESSIVE_MAX_POSITIONS", "4"))
 
     # Filter assets to those listed on this Hyperliquid environment

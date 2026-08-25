@@ -9,3 +9,5 @@ scikit-learn>=1.4
 requests>=2.31
 hyperliquid-python-sdk>=0.9.0
 eth-account>=0.13
+flask>=3.0
+gunicorn>=22.0

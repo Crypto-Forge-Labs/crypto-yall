@@ -1,7 +1,7 @@
 """
 notifier.py — Standalone signal checker with email + Telegram alerts.
 
-Runs via GitHub Actions cron. Checks all assets for signal transitions
+Can be triggered by the hosted scheduler service. Checks all assets for signal transitions
 and sends notifications when trades should be entered or exited.
 
 Required environment variables:
@@ -11,7 +11,7 @@ Required environment variables:
     TELEGRAM_BOT_TOKEN  – Telegram bot token from @BotFather
     TELEGRAM_CHAT_ID    – Telegram chat ID to send to
     GIST_TOKEN          – GitHub PAT with gist scope
-    GIST_ID             – ID of the private Gist for state persistence
+    GIST_ID             – ID of the secret/unlisted Gist for state persistence
 """
 
 import json
@@ -180,7 +180,7 @@ def send_email(transitions: list[dict]):
 
     html = f"""
     <div style="font-family:Arial,Helvetica,sans-serif;background:#ffffff;color:#1a1a1a;padding:24px;border:1px solid #e1e4e8;border-radius:8px;max-width:760px;">
-        <h2 style="color:#0969da;margin:0 0 8px 0;">Crypto Y'all Signal Alert</h2>
+        <h2 style="color:#0969da;margin:0 0 8px 0;">Crypto Forge Labs Signal Alert</h2>
         <p style="color:#57606a;margin:0 0 16px 0;">{dt.datetime.utcnow().strftime('%Y-%m-%d %H:%M UTC')}</p>
         <table style="width:100%;border-collapse:collapse;margin-top:16px;background:#ffffff;">
             <tr style="background:#f6f8fa;color:#57606a;text-transform:uppercase;font-size:0.75em;letter-spacing:0.5px;">
@@ -194,13 +194,13 @@ def send_email(transitions: list[dict]):
             {rows}
         </table>
         <p style="color:#8b949e;margin-top:24px;font-size:0.85em;">
-            Crypto Y'all — Strictly causal — No look-ahead bias
+            Crypto Forge Labs — Strictly causal — No look-ahead bias
         </p>
     </div>
     """
 
     msg = MIMEMultipart("alternative")
-    msg["Subject"] = f"[Crypto Y'all] Signal Alert: {', '.join(t['name'].split(' (')[0] + ' ' + t['action'] for t in transitions)}"
+    msg["Subject"] = f"[Crypto Forge Labs] Signal Alert: {', '.join(t['name'].split(' (')[0] + ' ' + t['action'] for t in transitions)}"
     msg["From"] = user
     msg["To"] = ", ".join(recipient_list)
     msg.attach(MIMEText(html, "html"))
@@ -220,7 +220,7 @@ def send_telegram(transitions: list[dict]):
 
     chat_ids = [c.strip() for c in chat_ids_raw.split(",") if c.strip()]
 
-    lines = ["*Crypto Y'all Signal Alert*", ""]
+    lines = ["*Crypto Forge Labs Signal Alert*", ""]
     for t in transitions:
         mode_label = "Aggressive" if t["mode"] == "aggressive" else "Standard"
         lines.append(f"*{t['name']}* — {t['action']}")

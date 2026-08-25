@@ -1,5 +1,5 @@
 """
-intraday_executor.py — Hourly trade executor using the 1h 2-pole oscillator.
+intraday_executor.py — Intraday trade executor using the 1h 2-pole oscillator.
 
 Reuses the Hyperliquid client code from hyperliquid_executor but runs on
 intraday candles from Hyperliquid's own candle endpoint. Completely
@@ -258,7 +258,7 @@ def main():
 
     signals = compute_intraday_signals()
     open_positions = get_open_positions(info, address)
-    capital = float(os.environ.get("INTRADAY_CAPITAL", "5000"))
+    capital = float(os.environ.get("INTRADAY_CAPITAL", "500"))
     max_positions = int(os.environ.get("INTRADAY_MAX_POSITIONS", "2"))
 
     # Filter out assets not listed on this Hyperliquid environment
