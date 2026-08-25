@@ -401,17 +401,17 @@ AGGRESSIVE_GIST_ID = "0917280713a7781dc72a984147eef295"
 
 ### Email (Gmail SMTP)
 
-- **Sender:** `nocodepathways@gmail.com` (configured via app password)
+- **Sender:** Your own Gmail address (configured via GitHub Secrets)
 - **Recipients:** Set in `NOTIFY_EMAILS` secret (comma-separated)
-- Currently sends to: `nocodepathways@gmail.com,josh@cryptoyall.co`
+- Currently sends to: Your configured notification email
 - Light theme HTML (readable in all clients)
 
 ### Telegram
 
-- **Bot:** `@Crypto_yall_bot`
-- **Direct link:** https://t.me/Crypto_yall_bot
+- **Bot:** Your own Telegram bot
+- **Direct link:** Your own Telegram bot link
 - **Chat IDs:** Set in `TELEGRAM_CHAT_ID` secret (comma-separated)
-- Currently sends to: Brendan's chat + Josh's chat
+- Currently sends to: Your configured Telegram chat
 
 ### When notifications fire
 
@@ -428,15 +428,15 @@ AGGRESSIVE_GIST_ID = "0917280713a7781dc72a984147eef295"
 
 **Email:** Update `NOTIFY_EMAILS` secret:
 ```bash
-gh secret set NOTIFY_EMAILS -b "you@example.com,josh@cryptoyall.co,new@person.com"
+gh secret set NOTIFY_EMAILS -b "you@example.com,new@person.com"
 ```
 
 **Telegram:**
-1. New person installs Telegram, messages `@Crypto_yall_bot` with `/start`
+1. New person installs Telegram, messages @YOUR_BOT_USERNAME with /start
 2. Open `https://api.telegram.org/bot<TOKEN>/getUpdates` to find their chat ID
 3. Update `TELEGRAM_CHAT_ID` secret:
 ```bash
-gh secret set TELEGRAM_CHAT_ID -b "8438419459,5038092102,NEW_CHAT_ID"
+gh secret set TELEGRAM_CHAT_ID -b "YOUR_CHAT_ID,NEW_CHAT_ID"
 ```
 
 ---
@@ -827,49 +827,47 @@ Brendan will do a one-time refactor to point each bot at its own sub-account key
 
 ### Repository
 
-- **GitHub repo:** https://github.com/aicodepathways/crypto-yall (public)
-- **Owner:** aicodepathways
+- **GitHub repo:** https://github.com/Crypto-Forge-Labs/crypto-yall (public)
+- **Owner:** Crypto-Forge-Labs
 
 ### Hyperliquid
 
-- **Account address (Josh's wallet):** `0x66aFE2E1242590F7edD7a4e20Ca3fBcbf770E765`
-- **API wallet address (current single shared):** `0x3C7768FbE23b63Fa49f874245cbC136C89118De7`
+- **Account address:** Your own Hyperliquid main account address
+- **API wallet address:** Your own authorized API wallet address
 - **API wallet private key:** stored in `HL_PRIVATE_KEY` secret
 - **Testnet faucet:** https://app.hyperliquid-testnet.xyz/drip (requires $5+ mainnet deposit first)
 
 ### Telegram bot
 
-- **Bot name:** `@Crypto_yall_bot`
-- **Direct link:** https://t.me/Crypto_yall_bot
+- **Bot name:** Your own Telegram bot
+- **Direct link:** Your own Telegram bot link
 - **Bot token:** stored in `TELEGRAM_BOT_TOKEN` secret
-- **Chat IDs:**
-  - Brendan: `8438419459`
-  - Josh: `5038092102`
+- **Chat ID:** Your configured Telegram chat ID
 
 ### Email
 
-- **Sender Gmail:** `nocodepathways@gmail.com`
+- **Sender Gmail:** Your own Gmail address
 - **App password:** stored in `GMAIL_APP_PASSWORD` secret
-- **Recipients (current):** `nocodepathways@gmail.com,josh@cryptoyall.co`
+- **Recipients (current):** Your configured notification email(s)
 
 ### GitHub Gists (state storage)
 
 | Gist ID | Filename | Purpose |
 |---------|----------|---------|
-| `ad73d92e1fa245c2725e06f60d68d13b` | `signal_state.json` | Last seen signals (for notifier) |
-| `d35732f9c123e95a4dc13a51855d21de` | `trading_state.json` | Daily bot state |
-| `02cbe06fb1c4eb8afb5fad321aa3a251` | `intraday_state.json` | Intraday Standard bot state |
-| `0917280713a7781dc72a984147eef295` | `aggressive_state.json` | Aggressive bot state |
+| `YOUR_SIGNAL_GIST_ID` | `signal_state.json` | Last seen signals (for notifier) |
+| `YOUR_TRADING_GIST_ID` | `trading_state.json` | Daily bot state |
+| `YOUR_INTRADAY_GIST_ID` | `intraday_state.json` | Intraday Standard bot state |
+| `YOUR_AGGRESSIVE_GIST_ID` | `aggressive_state.json` | Aggressive bot state |
 
 ### GitHub PAT for Gist access
 
-- **Token name:** "Crypto Yall Notifier"
+- **Token name:** "Crypto Forge Labs Bot"
 - **Scope:** `gist` only
 - **Stored in:** `GIST_TOKEN` secret (used by all 3 bots + dashboard)
 
 ### Streamlit Cloud
 
-- **Dashboard URL:** https://crypto-yall-8s3evlspcczux5ztdmat9e.streamlit.app/
+- **Dashboard URL:** Not configured yet
 - **Admin URL:** https://share.streamlit.io
 - **Secrets configured:** `GIST_TOKEN`, `TRADING_GIST_ID`, `INTRADAY_GIST_ID`, `AGGRESSIVE_GIST_ID`
 
