@@ -1,15 +1,15 @@
-# Crypto Y'all — Regime-Adaptive Trading System
+# Crypto Forge Labs — Regime-Adaptive Trading System
 
 A multi-strategy algorithmic trading system for crypto perpetual futures on Hyperliquid DEX. Combines HMM-based regime detection, 2-pole Butterworth oscillator signals, and three independent trading bots running on different timeframes.
 
-**Live dashboard:** https://crypto-yall-8s3evlspcczux5ztdmat9e.streamlit.app/
-**GitHub repo:** https://github.com/aicodepathways/crypto-yall
+**Live dashboard:** Not configured yet
+**GitHub repo:** https://github.com/Crypto-Forge-Labs/crypto-yall
 
 ---
 
 ## Quick Links by Role
 
-### If you're **Josh** (or a non-technical operator)
+### If you're a **non-technical operator**
 
 Start here. These are written in plain English with click-by-click instructions.
 
