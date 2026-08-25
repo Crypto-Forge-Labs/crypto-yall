@@ -803,16 +803,16 @@ If you qualify:
 
 1. Visit https://app.hyperliquid.xyz/subAccounts
 2. Create 3 sub-accounts:
-   - `Crypto Yall Daily`
-   - `Crypto Yall Intraday`
-   - `Crypto Yall Aggressive`
+   - `Crypto Forge Labs Daily`
+   - `Crypto Forge Labs Intraday`
+   - `Crypto Forge Labs Aggressive`
 3. For each, click into the sub-account, then go to https://app.hyperliquid.xyz/API
 4. Generate an API wallet authorized for that sub-account
-5. Send Brendan: sub-account address + API wallet private key for each
+5. Keep each API wallet private key private. Store each key only in your own GitHub Secrets.
 
-Brendan will do a one-time refactor to point each bot at its own sub-account key (adds `HL_DAILY_KEY`, `HL_INTRADAY_KEY`, `HL_AGGRESSIVE_KEY` env vars and updates the workflow YAMLs). Estimated time: 30-60 minutes of code work.
+If you use separate sub-account API wallets, update the bot configuration to use separate secrets such as `HL_DAILY_KEY`, `HL_INTRADAY_KEY`, and `HL_AGGRESSIVE_KEY`.
 
-**Note:** This is a one-time change for the master repo. Community members who fork the repo do NOT need this — their forks work fine with a single Hyperliquid account each.
+**Note:** This setup is optional. Most users can run all three bots with a single Hyperliquid account.
 
 ### Mainnet operational discipline
 
