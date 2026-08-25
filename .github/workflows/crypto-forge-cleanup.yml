@@ -354,36 +354,12 @@ jobs:
           write("render.yaml", textwrap_dedent(render_yaml))
 
           # ------------------------------------------------------------------
-          # 11) Remove automatic GitHub schedules.
-          #     Keep workflow_dispatch as a manual fallback only.
+          # 11) GitHub Actions scheduling note
           # ------------------------------------------------------------------
-          workflow_paths = [
-              ".github/workflows/execute-trades.yml",
-              ".github/workflows/execute-intraday.yml",
-              ".github/workflows/execute-aggressive.yml",
-              ".github/workflows/signal-check.yml",
-          ]
-
-          for wf in workflow_paths:
-              p = ROOT / wf
-              if not p.exists():
-                  print(f"Note: workflow not found, skipping: {wf}")
-                  continue
-              x = p.read_text(encoding="utf-8")
-
-              # Replace the complete "on: schedule + workflow_dispatch" block
-              # up to the blank line before jobs.
-              x2 = re.sub(
-                  r"(?ms)^on:\n.*?(?=^jobs:\n)",
-                  "on:\n  workflow_dispatch: {}  # Manual fallback; scheduling is handled by cron-job.org via Render\n\n",
-                  x,
-                  count=1,
-              )
-              if x2 == x:
-                  print(f"Note: no scheduled trigger block changed in {wf}")
-              else:
-                  p.write_text(x2, encoding="utf-8")
-                  print(f"Disabled GitHub schedule in {wf}")
+          # The existing scheduled workflow files are intentionally left
+          # untouched. Keep Execute Trades, Execute Intraday, Execute
+          # Aggressive and Check Signals disabled in GitHub Actions when
+          # cron-job.org is being used, so the same bot cannot fire twice.
 
           # ------------------------------------------------------------------
           # 12) User-facing scheduler guide
@@ -528,11 +504,18 @@ jobs:
 
           ## 6. Important: avoid duplicate scheduling
 
-          Do **not** leave automatic GitHub Action schedules enabled at the same
-          time as cron-job.org.
+          Do **not** leave GitHub Actions schedules enabled at the same time as
+          cron-job.org.
 
-          The Crypto Forge Labs cleanup removes those GitHub schedule triggers
-          and leaves the workflows as **manual-only fallbacks**.
+          In GitHub → Actions, keep these four workflows **Disabled** while
+          cron-job.org is running the scheduler:
+
+          - Execute Trades
+          - Execute Intraday
+          - Execute Aggressive
+          - Check Signals
+
+          The Test Trade workflow can remain available for manual testing.
 
           ## 7. Checking whether it is alive
 
@@ -665,9 +648,10 @@ jobs:
           git config user.name "Crypto Forge Labs Cleanup"
           git config user.email "actions@users.noreply.github.com"
           git add -A
+          git reset -- .github/workflows/ || true
           if git diff --cached --quiet; then
             echo "No changes to commit."
           else
-            git commit -m "Add Render cron scheduler and privacy cleanup"
+            git commit -m "Add Render cron scheduler and privacy cleanup v2"
             git push
           fi
