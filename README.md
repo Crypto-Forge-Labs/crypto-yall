@@ -681,9 +681,9 @@ gh variable set HL_TESTNET -b "true"    # testnet
 
 ```bash
 # Edit the relevant Gist, remove the "halted_today" key
-gh gist view 0917280713a7781dc72a984147eef295 -f aggressive_state.json > /tmp/state.json
+gh gist view YOUR_AGGRESSIVE_GIST_ID -f aggressive_state.json > /tmp/state.json
 # Edit /tmp/state.json, remove "halted_today" and "halt_reason" keys
-gh gist edit 0917280713a7781dc72a984147eef295 -f aggressive_state.json < /tmp/state.json
+gh gist edit YOUR_AGGRESSIVE_GIST_ID -f aggressive_state.json < /tmp/state.json
 ```
 
 ---
@@ -782,9 +782,9 @@ curl -s "https://api.telegram.org/bot<TOKEN>/getUpdates"
   ```
 - [ ] **Reset state Gists to fresh** (otherwise bots think they own testnet positions):
   ```bash
-  gh gist edit d35732f9c123e95a4dc13a51855d21de -f trading_state.json - <<< '{}'
-  gh gist edit 02cbe06fb1c4eb8afb5fad321aa3a251 -f intraday_state.json - <<< '{}'
-  gh gist edit 0917280713a7781dc72a984147eef295 -f aggressive_state.json - <<< '{}'
+  gh gist edit YOUR_TRADING_GIST_ID -f trading_state.json - <<< '{}'
+  gh gist edit YOUR_INTRADAY_GIST_ID -f intraday_state.json - <<< '{}'
+  gh gist edit YOUR_AGGRESSIVE_GIST_ID -f aggressive_state.json - <<< '{}'
   ```
 - [ ] **Tighten drawdown thresholds for real money:**
   ```bash
